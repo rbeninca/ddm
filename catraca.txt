@@ -1,0 +1,3 @@
+dois reles monofásicos
+dois reles de estado solido
+triac BTA41600B 
