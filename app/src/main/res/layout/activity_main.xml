@@ -8,13 +8,16 @@
     tools:context=".MainActivity">
 
     <com.ifsc.contaclick.CustomColorButton
-        android:id="@+id/customColorButton"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="click"
+        android:id="@+id/custom_button"
+        android:layout_width="200dp"
+        android:layout_height="200dp"
+        android:text="Deslize"
+        android:textColor="#FFFFFF"
+        android:textSize="18sp"
+        app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintEnd_toEndOf="parent"
+        />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
