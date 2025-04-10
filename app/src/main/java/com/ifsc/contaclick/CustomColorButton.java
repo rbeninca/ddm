@@ -1,5 +1,6 @@
 package com.ifsc.contaclick;
 
+import android.animation.ObjectAnimator;
 import android.content.Context;
 import android.content.res.ColorStateList;
 import android.graphics.Color;
@@ -63,9 +64,18 @@ public class CustomColorButton extends Button {
                 return true;
 
             case MotionEvent.ACTION_UP:
+
             case MotionEvent.ACTION_CANCEL:
+                // Anima de volta à posição original
+                ObjectAnimator animator = ObjectAnimator.ofFloat(this, "x", getX(), initialButtonX);
+                animator.setDuration(300); // duração em ms
+                animator.start();
+
+                // Retorna cor original (cinza)
+                backgroundDrawable.setColor(ColorStateList.valueOf(Color.GRAY));
                 return true;
         }
+
 
         return super.onTouchEvent(event);
     }
