@@ -1,9 +1,13 @@
 package com.ifsc.contaclick;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ListView;
 import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -11,28 +15,38 @@ import androidx.appcompat.app.AppCompatActivity;
 import java.util.Random;
 
 public class MainActivity extends AppCompatActivity {
-    EditText edmin, edmax;
-    TextView tvResultado;
+    ListView lv;
+    String[] nomes =new String[]{"Pera","Uva", "Maça", "Goiaba", "Morango","Melão","Mamão","Banana","Kiwi", "Tomate"};
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        edmin=findViewById(R.id.edmin);
-        edmax=findViewById(R.id.edmax);
-        tvResultado=findViewById(R.id.tvResultado);
-        Button b=findViewById(R.id.button);
+        lv=findViewById(R.id.listview);
 
-        b.setOnClickListener(v -> {
-            int min = Integer.parseInt(edmin.getText().toString());
-            int max = Integer.parseInt(edmax.getText().toString());
-            //Random
-            Random random=new Random();
+        ArrayAdapter<String> adapter = new ArrayAdapter<>(this,
+                android.R.layout.simple_list_item_1,
+                android.R.id.text1,
+                nomes);
 
-            int n=random.nextInt(max-min)+min;
+        lv.setAdapter(adapter);
 
-            tvResultado.setText(Integer.toString(n));
+        lv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                Intent i = new Intent(getApplicationContext(),ActivityB.class);
+                Bundle b= new Bundle();
+                b.putInt("posicao",position);
+                b.putString("fruta",nomes[position]);
 
+                i.putExtras(b);
+                //i.putExtra("posicao",position);
+                //i.putExtra("fruta",nomes[position]);
+
+                startActivity(i);
+            }
         });
+
+
 
     }
 
