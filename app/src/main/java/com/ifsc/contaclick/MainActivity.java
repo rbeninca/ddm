@@ -27,24 +27,13 @@ public class MainActivity extends AppCompatActivity {
 //                android.R.layout.simple_list_item_1,
 //                android.R.id.text1,
 //                nomes);
+        PlanetaAdapter planetaAdapter = new PlanetaAdapter( this,
+                                            R.layout.item_lista,
+                                            (  new DAOPlaneta()).listplanetas);
 
-        lv.setAdapter(adapter);
+        lv.setAdapter(planetaAdapter);
 
-        lv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                Intent i = new Intent(getApplicationContext(),ActivityB.class);
-                Bundle b= new Bundle();
-                b.putInt("posicao",position);
-                b.putString("fruta",nomes[position]);
 
-                i.putExtras(b);
-                //i.putExtra("posicao",position);
-                //i.putExtra("fruta",nomes[position]);
-
-                startActivity(i);
-            }
-        });
 
 
 
