@@ -16,17 +16,17 @@ import java.util.Random;
 
 public class MainActivity extends AppCompatActivity {
     ListView lv;
-    String[] nomes =new String[]{"Pera","Uva", "Maça", "Goiaba", "Morango","Melão","Mamão","Banana","Kiwi", "Tomate"};
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         lv=findViewById(R.id.listview);
 
-        ArrayAdapter<String> adapter = new ArrayAdapter<>(this,
-                android.R.layout.simple_list_item_1,
-                android.R.id.text1,
-                nomes);
+//        ArrayAdapter<String> adapter = new ArrayAdapter<>(this,
+//                android.R.layout.simple_list_item_1,
+//                android.R.id.text1,
+//                nomes);
 
         lv.setAdapter(adapter);
 
