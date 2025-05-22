@@ -2,7 +2,9 @@ package com.ifsc.contaclick;
 
 import android.graphics.Bitmap;
 
-public class Planeta {
+import java.io.Serializable;
+
+public class Planeta implements Serializable {
     String nome;
     Integer foto;
     //Bitmap photo;
