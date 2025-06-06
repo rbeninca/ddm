@@ -38,14 +38,14 @@ public class MainActivity extends AppCompatActivity {
         db.execSQL("CREATE TABLE IF NOT EXISTS notas (id INTEGER PRIMARY KEY AUTOINCREMENT , txt TEXT)");
         //Handler tratamento de evento
         buttonInsere.setOnClickListener(v->{
-            insereNota(editText.toString().trim());
+            insereNota(editText.getText().toString());
         });
         listView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
             @Override
             public boolean onItemLongClick(AdapterView<?> adapterView, View view, int i, long l) {
-
-                db.delete("notas","id=?",new String [] {Integer.toString()});
-                Toast.makeText(getApplicationContext(),Integer.toString(i),Toast.LENGTH_LONG).show();
+                Nota n =(Nota)adapterView.getItemAtPosition(i);
+                db.delete("notas","id=?",new String [] {Integer.toString(n.id)});
+                Toast.makeText(getApplicationContext(),Integer.toString(n.id),Toast.LENGTH_LONG).show();
                 carregaNota();
                 return false;
             }
@@ -64,20 +64,19 @@ public class MainActivity extends AppCompatActivity {
         cursor.moveToFirst();
         notas.clear();
         while(!cursor.isAfterLast()){
+            //Recuperando indice colunas dados
             int columnid =cursor.getColumnIndex("id");
             int columnTxt =cursor.getColumnIndex("txt");
-            //notas.add(cursor.getString(columnTxt).toString());
-            int id=cursor.getInt(columnTxt);
-            String txt=cursor.getString(columnTxt).toString();
+            //Recuperando os dados
+            int id=cursor.getInt(columnid);
+            String txt=cursor.getString(columnTxt);
             notas.add (new Nota(id,txt));
             cursor.moveToNext();
         }
 
-        ArrayAdapter<String> adapter = new ArrayAdapter<String>(this,
-                android.R.layout.simple_list_item_1,
-                android.R.id.text1,
-                notas
-                );
+       AdapterNota adapter =new AdapterNota(getApplicationContext(),
+               android.R.layout.simple_list_item_1,
+               notas);
         listView.setAdapter(adapter);
     }
 }

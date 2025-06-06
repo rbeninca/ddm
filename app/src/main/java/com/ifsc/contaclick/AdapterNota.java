@@ -31,6 +31,6 @@ public class AdapterNota extends ArrayAdapter<Nota> {
         Nota nota=getItem(position);
         TextView tv=v.findViewById(android.R.id.text1);
         tv.setText(nota.txt);
-        return super.getView(position, convertView, parent);
+        return v;
     }
 }
