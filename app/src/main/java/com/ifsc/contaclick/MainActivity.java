@@ -80,3 +80,20 @@ public class MainActivity extends AppCompatActivity {
         listView.setAdapter(adapter);
     }
 }
+
+
+/*
+versão do android WWWW
+Android Studio Meerkat Feature Drop | 2024.3.2
+Build #AI-243.25659.59.2432.13423653, built on April 29, 2025
+Runtime version: 21.0.6+-13368085-b895.109 amd64
+VM: OpenJDK 64-Bit Server VM by JetBrains s.r.o.
+Toolkit: sun.awt.windows.WToolkit
+Windows 11.0
+GC: G1 Young Generation, G1 Concurrent GC, G1 Old Generation
+Memory: 2048M
+Cores: 20
+Registry:
+  ide.experimental.ui=true
+
+ */
