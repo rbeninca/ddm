@@ -2,6 +2,8 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools">
 
+    <uses-permission
+        android:name="android.permission.QUERY_ALL_PACKAGES" />
     <application
         android:allowBackup="true"
         android:dataExtractionRules="@xml/data_extraction_rules"
@@ -12,9 +14,18 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.ContaClick"
         tools:targetApi="31">
+        <!-- A partir do Android 11 (API nível 30), o acesso a informações sobre todos os aplicativos instalados é restrito
+        por motivos de privacidade, por isso é necessário declarar a permissão QUERY_ALL_PACKAGES.
+        No entanto, essa permissão deve ser usada com cautela e apenas quando realmente necessário, pois pode afetar a privacidade do usuário.
+        O Google Play pode rejeitar aplicativos que usam essa permissão sem uma justificativa válida.
+
+         -->
+
+
         <activity
             android:name=".MainActivity"
             android:exported="true">
+
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
