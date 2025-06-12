@@ -26,21 +26,41 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
         listView = findViewById(R.id.listView);
 
-        // Inicializa o PackageManager de Context
-        pm = this.getPackageManager();
-        // Inicializa a lista de aplicativos
-        List<ApplicationInfo> applicationInfoList=pm.getInstalledApplications(PackageManager.GET_META_DATA);
-        applicationInfoList.forEach(applicationInfo -> {
-            Log.d("APP",applicationInfo.toString());
-        });
-        //Cria um adapter para a lista de aplicativos nos campos da view app_item.xml
-        listaAplicativos = new ArrayList<>();
-        AppAdapter appAdapter = new AppAdapter(this, applicationInfoList);
+        // Inicializa o PackageManager
+        PackageManager pm = getPackageManager();
+        Intent launcherIntent = new Intent(Intent.ACTION_MAIN, null);
+        launcherIntent.addCategory(Intent.CATEGORY_LAUNCHER);
 
-        // Inicializa a ListView
+// Lista de apps visíveis no launcher
+        List<ResolveInfo> launchables = pm.queryIntentActivities(launcherIntent, 0);
+
+        ArrayList<ApplicationInfo> listaAplicativos = new ArrayList<>();
+
+        for (ResolveInfo resolveInfo : launchables) {
+            ApplicationInfo appInfo = resolveInfo.activityInfo.applicationInfo;
+            if (appInfo != null && appInfo.enabled) {
+                listaAplicativos.add(appInfo);
+            }
+        }
+
+        // Adapter personalizado para mostrar nome e ícone dos apps
+        AppAdapter appAdapter = new AppAdapter(this, listaAplicativos);
         listView.setAdapter(appAdapter);
+
+        //Configura tratamento do clique na lista de aplicativos para abrir o aplicativo
+
+        listView.setOnItemClickListener((parent, view, position, id) -> {
+            ApplicationInfo appInfo = (ApplicationInfo) parent.getItemAtPosition(position);
+            Intent launchIntent = pm.getLaunchIntentForPackage(appInfo.packageName);
+            if (launchIntent != null) {
+                startActivity(launchIntent);
+            } else {
+                Log.e("MainActivity", "Não foi possível abrir o aplicativo: " + appInfo.packageName);
+            }
+        });
 
     }
 

@@ -107,7 +107,6 @@ public class AppAdapter extends ArrayAdapter<ApplicationInfo> {
             String.valueOf(ApplicationInfo.FLAG_PERSISTENT),
             String.valueOf(ApplicationInfo.FLAG_INSTALLED),
             String.valueOf(ApplicationInfo.FLAG_IS_GAME),
-
             String.valueOf(ApplicationInfo.FLAG_STOPPED),
             String.valueOf(ApplicationInfo.FLAG_VM_SAFE_MODE),
             String.valueOf(ApplicationInfo.FLAG_HARDWARE_ACCELERATED),
