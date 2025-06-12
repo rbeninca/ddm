@@ -1,40 +1,48 @@
 package com.ifsc.contaclick;
 
+import android.content.pm.ApplicationInfo;
+import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ListView;
 import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Random;
 
 public class MainActivity extends AppCompatActivity {
-    EditText edmin, edmax;
-    TextView tvResultado;
+    PackageManager pm;
+    ListView listView;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        edmin=findViewById(R.id.edmin);
-        edmax=findViewById(R.id.edmax);
-        tvResultado=findViewById(R.id.tvResultado);
-        Button b=findViewById(R.id.button);
+        listView = findViewById(R.id.listView);
 
-        b.setOnClickListener(v -> {
-            int min = Integer.parseInt(edmin.getText().toString());
-            int max = Integer.parseInt(edmax.getText().toString());
-            //Random
-            Random random=new Random();
+        pm=getPackageManager();
+        List<ApplicationInfo> applicationInfos=pm.getInstalledApplications(PackageManager.MATCH_ALL);
 
-            int n=random.nextInt(max-min)+min;
 
-            tvResultado.setText(Integer.toString(n));
+        List<ApplicationInfo> appsFiltrados=new ArrayList<>();
+        for (ApplicationInfo app: applicationInfos) {
+            if ((app.flags & ApplicationInfo.FLAG_SYSTEM)==0){
+                appsFiltrados.add(app);
+            }
+        }
 
-        });
+        AppAdapter adapter =new AppAdapter(this,R.layout.item_app,appsFiltrados);
+        listView.setAdapter(adapter);
+
+
+
+
 
     }
-
-
 }
