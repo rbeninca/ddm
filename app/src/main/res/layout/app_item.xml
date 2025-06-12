@@ -3,140 +3,28 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content">
-
-    <TextView
-        android:id="@+id/textViewName"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:layout_marginEnd="16dp"
-        android:text="textViewName"
-        app:layout_constraintBottom_toTopOf="@+id/textViewPackage"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toEndOf="@+id/imageView"
-        app:layout_constraintTop_toTopOf="parent" />
+    android:layout_height="match_parent">
 
     <ImageView
         android:id="@+id/imageView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        app:layout_constraintBottom_toTopOf="@+id/textViewIcon"
-        app:layout_constraintEnd_toStartOf="@+id/textViewName"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/linearLayoutData"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.473"
         app:srcCompat="@drawable/ic_launcher_foreground" />
 
-    <TextView
-        android:id="@+id/textViewPackage"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:text="textViewPackage"
-        app:layout_constraintBottom_toTopOf="@+id/textViewUUIDapp"
-        app:layout_constraintEnd_toEndOf="@+id/textViewName"
+    <LinearLayout
+        android:id="@+id/linearLayoutData"
+        android:layout_width="285dp"
+        android:layout_height="729dp"
+        android:orientation="vertical"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toStartOf="@+id/textViewName"
-        app:layout_constraintTop_toBottomOf="@+id/textViewName" />
+        app:layout_constraintStart_toEndOf="@+id/imageView"
+        tools:layout_editor_absoluteY="1dp"></LinearLayout>
 
-    <TextView
-        android:id="@+id/textViewUUIDapp"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:text="textViewUUIDapp"
-        app:layout_constraintBottom_toTopOf="@+id/textViewPathApk"
-        app:layout_constraintEnd_toEndOf="@+id/textViewName"
-        app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toStartOf="@+id/textViewName"
-        app:layout_constraintTop_toBottomOf="@+id/textViewPackage" />
-
-    <TextView
-        android:id="@+id/textViewPathApk"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:text="textViewPathApk"
-        app:layout_constraintBottom_toTopOf="@+id/textViewDataDir"
-        app:layout_constraintEnd_toEndOf="@+id/textViewName"
-        app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toStartOf="@+id/textViewName"
-        app:layout_constraintTop_toBottomOf="@+id/textViewUUIDapp" />
-
-    <TextView
-        android:id="@+id/textViewDataDir"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:text="textViewDataDir"
-        app:layout_constraintBottom_toTopOf="@+id/textViewFlags"
-        app:layout_constraintEnd_toEndOf="@+id/textViewName"
-        app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toStartOf="@+id/textViewName"
-        app:layout_constraintTop_toBottomOf="@+id/textViewPathApk" />
-
-    <TextView
-        android:id="@+id/textViewFlags"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:text="textViewFlags"
-        app:layout_constraintBottom_toTopOf="@+id/textViewEnable"
-        app:layout_constraintEnd_toEndOf="@+id/textViewName"
-        app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toStartOf="@+id/textViewName"
-        app:layout_constraintTop_toBottomOf="@+id/textViewDataDir" />
-
-    <TextView
-        android:id="@+id/textViewEnable"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:text="textViewEnable"
-        app:layout_constraintBottom_toTopOf="@+id/textViewtargetSdkVersion"
-        app:layout_constraintEnd_toEndOf="@+id/textViewName"
-        app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toStartOf="@+id/textViewName"
-        app:layout_constraintTop_toBottomOf="@+id/textViewFlags" />
-
-    <TextView
-        android:id="@+id/textViewtargetSdkVersion"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:text="textViewtargetSdkVersion"
-        app:layout_constraintBottom_toTopOf="@+id/textViewminSdkVersion"
-        app:layout_constraintEnd_toEndOf="@+id/textViewName"
-        app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toStartOf="@+id/textViewName"
-        app:layout_constraintTop_toBottomOf="@+id/textViewEnable" />
-
-    <TextView
-        android:id="@+id/textViewminSdkVersion"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:text="textViewminSdkVersion"
-        app:layout_constraintBottom_toTopOf="@+id/textViewclassLoaderName"
-        app:layout_constraintEnd_toEndOf="@+id/textViewName"
-        app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toStartOf="@+id/textViewName"
-        app:layout_constraintTop_toBottomOf="@+id/textViewtargetSdkVersion" />
-
-    <TextView
-        android:id="@+id/textViewclassLoaderName"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:text="textViewclassLoaderName"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="@+id/textViewName"
-        app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toStartOf="@+id/textViewName"
-        app:layout_constraintTop_toBottomOf="@+id/textViewminSdkVersion" />
-
-    <TextView
-        android:id="@+id/textViewIcon"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="textViewIcon"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="@+id/imageView"
-        app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toStartOf="@+id/imageView"
-        app:layout_constraintTop_toBottomOf="@+id/imageView" />
 </androidx.constraintlayout.widget.ConstraintLayout>
