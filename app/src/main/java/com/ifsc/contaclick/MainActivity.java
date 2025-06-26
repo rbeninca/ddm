@@ -1,10 +1,13 @@
 package com.ifsc.contaclick;
 
 import android.Manifest;
+import android.content.Context;
 import android.content.pm.PackageManager;
 import android.location.Location;
+import android.location.LocationManager;
 import android.os.Bundle;
 import android.os.Looper;
+import android.util.Log;
 import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -22,7 +25,7 @@ public class MainActivity extends AppCompatActivity {
     private TextView txtCoordenadas;
     private LocationRequest locationRequest;
     private LocationCallback locationCallback;
-
+    LocationManager locationManager;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -31,42 +34,32 @@ public class MainActivity extends AppCompatActivity {
         txtCoordenadas = findViewById(R.id.txtCoordenadas);
         Button btnGetLocation = findViewById(R.id.btnGetLocation);
 
-        fusedLocationClient = LocationServices.getFusedLocationProviderClient(this);
+        locationManager= (LocationManager) getSystemService(Context.LOCATION_SERVICE);
 
-        //configura a solicitação de localização
-        locationRequest = new LocationRequest.Builder(Priority.PRIORITY_HIGH_ACCURACY, 1000)
-                .setWaitForAccurateLocation(true)
-
-                .build();
-
-        //configura o callback para receber as atualizações de localização  ou objeto LocationResult
-        locationCallback = new LocationCallback() {
-            @Override
-            public void onLocationResult(@NonNull LocationResult locationResult) {
-                Location location = locationResult.getLastLocation();
-                if (location != null) {
-                    txtCoordenadas.setText("Latitude: " + location.getLatitude() + ", Longitude: " + location.getLongitude());
-                } else {
-                    txtCoordenadas.setText("Localização não disponível");
-                }
-            }
-        };
 
         //configra o botão para obter a localização
         btnGetLocation.setOnClickListener(v -> getLocation());
     }
 
     public void getLocation() {
-        //checa se a permissão de localização foi concedida usando o ActivityCompat do AndroidX
-        //getPackageManager().checkPermission(permission, getPackageName()); equivalente apos api 23
-        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION)
+                != PackageManager.PERMISSION_GRANTED &&
+                ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION)
+                        != PackageManager.PERMISSION_GRANTED) {
+            // Solicite permissão se necessário
             ActivityCompat.requestPermissions(this,
-                    new String[]{Manifest.permission.ACCESS_FINE_LOCATION},
-                    LOCATION_PERMISSION_REQUEST_CODE);
+                    new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, 1);
             return;
         }
 
-        fusedLocationClient.requestLocationUpdates(locationRequest, locationCallback, Looper.getMainLooper());
+        Location location = locationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER);
+        if (location != null) {
+            double latitude = location.getLatitude();
+            double longitude = location.getLongitude();
+            Log.d("LOCALIZAÇÃO", "Lat: " + latitude + " Lon: " + longitude);
+            txtCoordenadas.setText("Latitude: " + latitude + "\nLongitude: " + longitude);
+        }
+
     }
 
     @Override
