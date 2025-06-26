@@ -33,11 +33,13 @@ public class MainActivity extends AppCompatActivity {
 
         fusedLocationClient = LocationServices.getFusedLocationProviderClient(this);
 
+        //configura a solicitação de localização
         locationRequest = new LocationRequest.Builder(Priority.PRIORITY_HIGH_ACCURACY, 1000)
                 .setWaitForAccurateLocation(true)
-                .setMaxUpdates(1)
+
                 .build();
 
+        //configura o callback para receber as atualizações de localização  ou objeto LocationResult
         locationCallback = new LocationCallback() {
             @Override
             public void onLocationResult(@NonNull LocationResult locationResult) {
@@ -50,10 +52,13 @@ public class MainActivity extends AppCompatActivity {
             }
         };
 
+        //configra o botão para obter a localização
         btnGetLocation.setOnClickListener(v -> getLocation());
     }
 
     public void getLocation() {
+        //checa se a permissão de localização foi concedida usando o ActivityCompat do AndroidX
+        //getPackageManager().checkPermission(permission, getPackageName()); equivalente apos api 23
         if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
             ActivityCompat.requestPermissions(this,
                     new String[]{Manifest.permission.ACCESS_FINE_LOCATION},
@@ -65,9 +70,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     @Override
-    public void onRequestPermissionsResult(int requestCode,
-                                           @NonNull String[] permissions,
-                                           @NonNull int[] grantResults) {
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
         if (requestCode == LOCATION_PERMISSION_REQUEST_CODE) {
             if (grantResults.length > 0 &&
