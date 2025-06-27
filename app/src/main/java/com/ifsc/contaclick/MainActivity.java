@@ -1,5 +1,10 @@
 package com.ifsc.contaclick;
 
+import android.content.Context;
+import android.hardware.Sensor;
+import android.hardware.SensorEvent;
+import android.hardware.SensorEventListener;
+import android.hardware.SensorManager;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -10,31 +15,30 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import java.util.Random;
 
-public class MainActivity extends AppCompatActivity {
-    EditText edmin, edmax;
-    TextView tvResultado;
+public class MainActivity extends AppCompatActivity implements SensorEventListener {
+
+    SensorManager sensorManager;
+    TextView tv;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        edmin=findViewById(R.id.edmin);
-        edmax=findViewById(R.id.edmax);
-        tvResultado=findViewById(R.id.tvResultado);
-        Button b=findViewById(R.id.button);
-
-        b.setOnClickListener(v -> {
-            int min = Integer.parseInt(edmin.getText().toString());
-            int max = Integer.parseInt(edmax.getText().toString());
-            //Random
-            Random random=new Random();
-
-            int n=random.nextInt(max-min)+min;
-
-            tvResultado.setText(Integer.toString(n));
-
-        });
-
+        tv=findViewById(R.id.tvResultado);
+        sensorManager=(SensorManager) getSystemService(Context.SENSOR_SERVICE);
+        Sensor sensor1=sensorManager.getDefaultSensor(Sensor.TYPE_LIGHT);
+        Sensor sensor2=sensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER);
+        sensorManager.registerListener(this,sensor1,SensorManager.SENSOR_DELAY_NORMAL);
+        sensorManager.registerListener(this,sensor2,SensorManager.SENSOR_DELAY_NORMAL);
+    }
+    @Override
+    public void onSensorChanged(SensorEvent sensorEvent) {
+        if(sensorEvent.sensor.getType()==Sensor.TYPE_LIGHT) {
+            tv.setText(Float.toString(sensorEvent.values[0]));
+        }
     }
 
+    @Override
+    public void onAccuracyChanged(Sensor sensor, int i) {
 
+    }
 }
