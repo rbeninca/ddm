@@ -23,6 +23,8 @@ import org.osmdroid.views.overlay.Marker;
 import org.osmdroid.views.overlay.mylocation.GpsMyLocationProvider;
 import org.osmdroid.views.overlay.mylocation.MyLocationNewOverlay;
 
+import java.text.DecimalFormat;
+
 public class MainActivity extends AppCompatActivity {
     TextView tvLatitude, tvLongitude, tvStatus;
     LocationManager locationManager;
@@ -71,13 +73,17 @@ public class MainActivity extends AppCompatActivity {
         }
 
     }
+    private boolean firstLocationUpdate = true;
+
     private void showUserLocation(double latitude, double longitude) {
         GeoPoint userLocation = new GeoPoint(latitude, longitude);
-        // Centraliza e ajusta zoom no ponto recebido
-        map.getController().setCenter(userLocation);
-        map.getController().setZoom(18.0);
 
-        // Adiciona um marcador no ponto
+        if (firstLocationUpdate) {
+            map.getController().setCenter(userLocation);
+            map.getController().setZoom(18.0);
+            firstLocationUpdate = true;
+        }
+
         Marker marker = new Marker(map);
         marker.setPosition(userLocation);
         marker.setTitle("Você está aqui");
@@ -85,16 +91,15 @@ public class MainActivity extends AppCompatActivity {
         map.getOverlays().clear();
         map.getOverlays().add(marker);
 
-
-        map.invalidate(); // Atualiza visualmente
-
-
+        map.invalidate();
     }
     public final android.location.LocationListener locationListener = new android.location.LocationListener() {
         @Override
         public void onLocationChanged(@NonNull Location location) {
-            tvLatitude.setText("Latitude: " + location.getLatitude());
-            tvLongitude.setText("Longitude: " + location.getLongitude());
+            DecimalFormat decimalFormat = new DecimalFormat("##.######");
+            tvLatitude.setText("Latitude: " + decimalFormat.format(location.getLatitude()));
+            tvLongitude.setText("Longitude: " + decimalFormat.format(location.getLongitude()));
+
             tvStatus.setText("Localização Atualizada");
             showUserLocation(location.getLatitude(), location.getLongitude());
         }
