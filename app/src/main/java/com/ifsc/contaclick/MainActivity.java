@@ -32,16 +32,13 @@ public class MainActivity extends AppCompatActivity {
 
     private void getLocalizacao() {
         if (checkAndGetPermissions()) {
-            Location location = locationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER);
-            if (location != null) {
-                tvLatitude.setText("Latitude: " + location.getLatitude());
-                tvLongitude.setText("Longitude: " + location.getLongitude());
-            } else {
-                tvLatitude.setText("Localização não disponível");
-                tvLongitude.setText("Localização não disponível");
-            }
+          locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 0, 0, locationListener);
+        } else {
+            tvStatus.setText("Permissão Negada");
         }
     }
+
+
     public boolean checkAndGetPermissions() {
         if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED ||
             ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
@@ -52,6 +49,29 @@ public class MainActivity extends AppCompatActivity {
         }
 
     }
+    public final android.location.LocationListener locationListener = new android.location.LocationListener() {
+        @Override
+        public void onLocationChanged(@NonNull Location location) {
+            tvLatitude.setText("Latitude: " + location.getLatitude());
+            tvLongitude.setText("Longitude: " + location.getLongitude());
+            tvStatus.setText("Localização Atualizada");
+        }
+
+        @Override
+        public void onStatusChanged(String provider, int status, Bundle extras) {
+            // Implementar se necessário
+        }
+
+        @Override
+        public void onProviderEnabled(@NonNull String provider) {
+            // Implementar se necessário
+        }
+
+        @Override
+        public void onProviderDisabled(@NonNull String provider) {
+            // Implementar se necessário
+        }
+    };
 
 //    @Override
 //    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
